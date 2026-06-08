@@ -32,14 +32,13 @@ class Logs(Base):
     action_result = Column(String, nullable=False)
 
 Base.metadata.create_all(bind=engine0)
-Base.metadata.create_all(bind=engine1)
 
 def inputt(engine:str, input_data:Logs):
     with Session(autoflush=False, bind=engine) as db:
         db.add(input_data)
         db.commit()
 
-def sendto_shard(input_data:Logs, memory):
+def sendto_shard(input_data:Logs, memory:int):
     match memory:
         case 0:
             inputt(engine=engine0, input_data = input_data)
@@ -83,7 +82,7 @@ def sendto_shard(input_data:Logs, memory):
 def main():
     input_data = Logs(username = "asd", user_action = "DELETE", action_date = "2023-01-01", action_time = "00:00:00", action_result = "OK")
     memory = 0
-    for i in range(0, 11):
+    for _ in range(0, 11):
         memory = sendto_shard(input_data, memory=memory)
 
 if __name__ == "__main__":
