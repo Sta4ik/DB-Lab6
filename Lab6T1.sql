@@ -43,7 +43,7 @@ SELECT
         ELSE 'UNKNOWN'
     END,
     
-    -- action_date: случайная дата за ~3 года (начиная с 2023-01-01)
+    -- action_date: случайная дата за год
     DATEADD(DAY, rand_val % 365, '2025-01-01'),
     
     -- action_time: случайное время суток (0-86399 секунд)
